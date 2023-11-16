@@ -1,9 +1,8 @@
 ---
 const { lang } = Astro.params;
-import { getData } from '@lib/api.js';
+import { getData } from '../../lib/api.js';
 
 const currentLang = lang;
-const data = await getData(`/${currentLang}/home.json`);
 const global = await getData(`/${currentLang}/global.json`);
 const pageTitle = global.siteTitle;
 ---
