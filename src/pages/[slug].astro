@@ -1,31 +1,23 @@
 ---
 import { getGlobal } from '@lib/api.js';
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Layouts from '@components/Layouts.astro';
-const API_URL = import.meta.env.KIRBY_URL;
-
-export async function getStaticPaths() {
-	const API_URL = import.meta.env.KIRBY_URL;
-	const pagesResponse = await fetch(API_URL + '/index.json');
-	const data = await pagesResponse.json();
-
-	return data.map((item) => {
-		return {
-			params: {
-				slug: item.uri,
-			},
-		};
-	});
-}
+const API_URL = 'https://cms.baukasten.matthiashacksteiner.net';
 
 const { slug } = Astro.params;
 const pagesResponse = await fetch(API_URL + '/' + slug + '.json');
 if (!pagesResponse) throw Astro.redirect('/404');
 const data = await pagesResponse.json();
 const global = await getGlobal();
-const pageTitle = global.siteTitle + ' | ' + data.title;
+const pageTitle = global.siteTitle;
 ---
 
-<BaseLayout pageTitle={pageTitle} data={data} global={global}>
-	<Layouts layouts={data.layouts} data={data} global={global} />
-</BaseLayout>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		{pageTitle}
+		{slug}
+	</body>
+</html>

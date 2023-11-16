@@ -5,7 +5,7 @@ import Layouts from '@components/Layouts.astro';
 
 const data = await getData(`/error.json`);
 const global = await getGlobal();
-const pageTitle = global.siteTitle + ' | ' + data.title;
+const pageTitle = global.siteTitle;
 ---
 
 <BaseLayout pageTitle={pageTitle} data={data} global={global}>

@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.KIRBY_URL;
+const API_URL = 'https://cms.baukasten.matthiashacksteiner.net';
 
 class KirbyApiError extends Error {
 	url;
@@ -41,50 +41,4 @@ export async function getLanguages() {
 		defaultLang: global.defaultLang,
 		allLang: global.allLang,
 	};
-}
-
-// export the getFonts function
-export async function getFonts() {
-	const global = await getGlobal();
-	if (!global.font || global.font.length === 0) {
-		return `@font-face {
-      font-family: system-ui;
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }`;
-	}
-	return `${global.font
-		.map((item) => {
-			return `@font-face {
-        font-family: '${item.name}';
-        src: url('${item.url2}') format('woff2'),
-             url('${item.url1}') format('woff');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }`;
-		})
-		.join('')}`;
-}
-
-// export all font sizes
-export async function getSizes() {
-	const baseFontSize = 16;
-	const global = await getGlobal();
-	return `${global.fontSize
-		.map((item) => {
-			return `
-      .font--${item.name} {
-        font-size: ${item.sizeMobile / baseFontSize}rem;
-        line-height: ${item.lineHeightMobile / item.sizeMobile};
-      }
-      @media (min-width: 768px) {
-        .font--${item.name} {
-          font-size: ${item.sizeDesktop / baseFontSize}rem;
-          line-height: ${item.lineHeightDesktop / item.sizeDesktop};
-        }
-      }`;
-		})
-		.join('')}`;
 }

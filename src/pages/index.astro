@@ -1,26 +1,65 @@
 ---
-import { getData, getGlobal, getLanguages } from '@lib/api.js';
-const languages = await getLanguages();
-const translations = languages.translations;
-const defaultLanguage = languages.defaultLang.code;
+import { getData, getGlobal } from '../lib/api.js';
 
-if (translations.length > 0) {
-	return Astro.redirect('/' + defaultLanguage + '/');
-}
-
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Layouts from '@components/Layouts.astro';
 const data = await getData(`/home.json`);
 const global = await getGlobal();
-const pageTitle = global.siteTitle + ' | ' + data.title;
+const origin = Astro.url.origin;
+const currentLang = data.lang;
+
 ---
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="flex">
+			<h1 class="text-4xl">index</h1>
+			<h2 class="text-xl mb-10">Current language: {currentLang}</h2>
+			<h3>Multilanguages - works</h3>
+			<nav class="flex">
+				{
+					global.navHeader &&
+						global.navHeader.map((item) => {
+								return (
+									<a
+										href={`${origin}/${currentLang}/${item.uri}`}
+										target={'_blank'}
+										rel='noopener'
+										}
+									>
+										{item.title}
+									</a>
+								);
+						})
+				}
+			</nav>
+			<h3>Single Language - not working!</h3>
+			<nav class="flex">
+				{
+					global.navHeader &&
+						global.navHeader.map((item) => {
+								return (
+									<a
+										href={`${origin}/${item.uri}`}
+										target={'_blank'}
+										rel='noopener'
+										}
+									>
+										{item.title}
+									</a>
+								);
+						})
+				}
+			</nav>
+		</div>
+	</body>
+</html>
 
-{
-	translations.length > 0 && (
-		<meta http-equiv="refresh" content={`0;url=/${defaultLanguage}/`} />
-	)
-}
-
-<BaseLayout pageTitle={pageTitle} data={data} global={global}>
-	<Layouts layouts={data.layouts} data={data} global={global} />
-</BaseLayout>
+<style lang="css">
+	.flex {
+		display: flex;
+		flex-direction: column;
+	}
+</style>
