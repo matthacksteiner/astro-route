@@ -1,0 +1,176 @@
+---
+import '@styles/global.css';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import KirbyMeta from '@components/KirbyMeta.astro';
+import { getFonts, getSizes } from '@lib/api.js';
+
+const { data, global, pageTitle } = Astro.props;
+const fonts = getFonts();
+const sizes = getSizes();
+const lang = data.lang;
+
+const colorPrimary = global.colorPrimary;
+const colorSecondary = global.colorSecondary;
+const colorTertiary = global.colorTertiary;
+const colorBlack = global.colorBlack;
+const colorWhite = global.colorWhite;
+const colorTransparent = global.colorTransparent;
+const colorBackground = global.colorBackground;
+
+const baseSize = 16;
+const gridGapMobile =
+	global.gridGapMobile / baseSize
+		? global.gridGapMobile / baseSize + 'rem'
+		: '20px';
+const gridMarginMobile =
+	global.gridMarginMobile / baseSize
+		? global.gridMarginMobile / baseSize + 'rem'
+		: '20px';
+const gridGapDesktop =
+	global.gridGapDesktop / baseSize
+		? global.gridGapDesktop / baseSize + 'rem'
+		: '40px';
+const gridMarginDesktop =
+	global.gridMarginDesktop / baseSize
+		? global.gridMarginDesktop / baseSize + 'rem'
+		: '40px';
+const gridBlockMobile =
+	global.gridBlockMobile / baseSize
+		? global.gridBlockMobile / baseSize + 'rem'
+		: '16px';
+const gridBlockDesktop =
+	global.gridBlockDesktop / baseSize
+		? global.gridBlockDesktop / baseSize + 'rem'
+		: '16px';
+
+const url = Astro.url.origin;
+const description = data.meta.description;
+const favSvg = global.favicon.svgSrc;
+const favIco = global.favicon.icoSrc;
+const pngAppleSrc = global.favicon.pngAppleSrc;
+const png192Src = global.favicon.png192Src;
+const png512Src = global.favicon.png512Src;
+---
+
+<!DOCTYPE html>
+<html
+	lang={lang}
+	class={`bg--${colorBackground} full motion-safe:scroll-smooth`}
+>
+	<head>
+		<KirbyMeta data={data} global={global} />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle}</title>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href={`${favSvg || '/favicons/favicon.svg'}`}
+		/>
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href={`${favIco || '/favicons/favicon.ico'}`}
+		/>
+		<link
+			rel="apple-touch-icon"
+			href={`${pngAppleSrc || '/favicons/apple-touch-icon.png'}`}
+		/>
+		<link rel="manifest" id="manifestPlaceholder" />
+		<meta name="theme-color" content={`${colorPrimary}`} />
+		<style set:html={fonts}></style>
+		<style set:html={sizes}></style>
+		<link rel="sitemap" href="/sitemap-index.xml" />
+	</head>
+	<body
+		class="mx-auto items-center overflow-x-hidden selection:bg-secondary selection:text-white"
+		data-png192src={png192Src}
+		data-png512src={png512Src}
+		data-url={url}
+		data-color={colorPrimary}
+		data-description={description}
+	>
+		<Header data={data} global={global} />
+
+		<main class="flex min-h-[100vh] w-full flex-col">
+			<slot />
+		</main>
+		<Footer data={data} global={global} />
+		<style
+			is:global
+			lang="css"
+			define:vars={{
+				global,
+				colorPrimary,
+				colorSecondary,
+				colorTertiary,
+				colorBlack,
+				colorWhite,
+				colorTransparent,
+				gridGapMobile,
+				gridMarginMobile,
+				gridGapDesktop,
+				gridMarginDesktop,
+				gridBlockMobile,
+				gridBlockDesktop,
+			}}
+		>
+			:root {
+				--color-primary: var(--colorPrimary);
+				--color-secondary: var(--colorSecondary);
+				--color-tertiary: var(--colorTertiary);
+				--color-black: var(--colorBlack);
+				--color-white: var(--colorWhite);
+				--color-transparent: var(--colorTransparent);
+				--grid-margin-mobile: var(--gridMarginMobile);
+				--grid-margin-desktop: var(--gridMarginDesktop);
+			}
+
+			.grid-default {
+				@apply grid grid-cols-6 gap-x-[var(--gridGapMobile)] max-lg:gap-y-[var(--gridGapMobile)] lg:grid-cols-12 lg:gap-x-[var(--gridGapDesktop)];
+			}
+
+			.blocks + .blocks {
+				@apply mt-[var(--gridBlockMobile)] lg:mt-[var(--gridBlockDesktop)];
+			}
+		</style>
+		<script>
+			let png192Src = document.querySelector('body')?.dataset.png192src;
+			let png512Src = document.querySelector('body')?.dataset.png512src;
+			let url = document.querySelector('body')?.dataset.url;
+			let color = document.querySelector('body')?.dataset.color;
+			let title = document.querySelector('title')?.innerText;
+			let description = document.querySelector('body')?.dataset.description;
+			let myDynamicManifest = {
+				name: title,
+				short_name: title,
+				description: description,
+
+				start_url: url,
+				background_color: '#ffffff',
+				theme_color: color,
+				display: 'standalone',
+				icons: [
+					{
+						src: png192Src || url + '/favicons/android-chrome-192x192.png',
+						sizes: '192x192',
+						type: 'image/png',
+					},
+					{
+						src: png512Src || url + '/favicons/android-chrome-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+					},
+				],
+			};
+			const stringManifest = JSON.stringify(myDynamicManifest);
+			const blob = new Blob([stringManifest], { type: 'application/json' });
+			const manifestURL = URL.createObjectURL(blob);
+			document
+				.querySelector('#manifestPlaceholder')
+				.setAttribute('href', manifestURL);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,24 @@
+---
+const {
+	spacingMobileTop,
+	spacingMobileBottom,
+	spacingDesktopTop,
+	spacingDesktopBottom,
+} = Astro.props;
+---
+
+<div class="blockDivider blocks"></div>
+
+<style
+	lang="css"
+	define:vars={{
+		spacingDesktopBottom,
+		spacingDesktopTop,
+		spacingMobileBottom,
+		spacingMobileTop,
+	}}
+>
+	.blockDivider {
+		@apply pb-[var(--spacingMobileBottom)] pt-[var(--spacingMobileTop)] lg:pb-[var(--spacingDesktopBottom)] lg:pt-[var(--spacingDesktopTop)];
+	}
+</style>
