@@ -5,7 +5,6 @@ const { lang } = Astro.params;
 const currentLang = lang;
 const global = JSON.parse(fs.readFileSync(path.resolve(`./src/json/global.json`), 'utf-8'));
 const origin = Astro.url.origin
-const pageTitle = global.siteTitle;
 ---
 
 <html lang="en">
@@ -26,7 +25,7 @@ const pageTitle = global.siteTitle;
 						global.navHeader.map((item) => {
 								return (
 									<a
-										href={`${currentLang}/${item.uri}`}
+										href={`/${item.uri}`}
 										target={'_self'}
 										rel='noopener'
 										}
