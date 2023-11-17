@@ -1,9 +1,9 @@
 ---
+import fs from 'fs';
+import path from 'path';
 const { lang } = Astro.params;
-import { getData } from '../../lib/api.js';
-
 const currentLang = lang;
-const global = await getData(`/${currentLang}/global.json`);
+const global = JSON.parse(fs.readFileSync(path.resolve(`./src/json/global.json`), 'utf-8'));
 const origin = Astro.url.origin
 const pageTitle = global.siteTitle;
 ---
@@ -26,7 +26,25 @@ const pageTitle = global.siteTitle;
 						global.navHeader.map((item) => {
 								return (
 									<a
-										href={`/${currentLang}/${item.uri}`}
+										href={`${currentLang}/${item.uri}`}
+										target={'_self'}
+										rel='noopener'
+										}
+									>
+										{item.title}
+									</a>
+								);
+						})
+				}
+			</nav>
+			<h3>Single Language - not working!</h3>
+			<nav class="flex">
+				{
+					global.navHeader &&
+						global.navHeader.map((item) => {
+								return (
+									<a
+										href={`/${item.uri}`}
 										target={'_self'}
 										rel='noopener'
 										}

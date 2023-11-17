@@ -1,0 +1,62 @@
+{
+	"meta": {
+		"title": "Baukasten",
+		"description": "Hier ist der seo f&uuml;r home deutsch",
+		"robots": "all",
+		"canonical": "http://cms.baukasten.local/de",
+		"social": {
+			"og:locale": "de",
+			"og:site_name": "Baukasten",
+			"og:url": "http://cms.baukasten.local/de",
+			"og:type": "website",
+			"og:title": "Baukasten",
+			"og:description": "Hier ist der seo f\u00fcr home deutsch"
+		}
+	},
+	"intendedTemplate": "home",
+	"title": "home-deutsch",
+	"lang": "de",
+	"layouts": [
+		{
+			"id": "430d7fd7-6e8a-408e-a41d-de94705ad7dc",
+			"anchor": "",
+			"backgroundContainer": "container",
+			"backgroundHeight": "auto",
+			"backgroundColor": "transparent",
+			"backgroundContainerColor": "transparent",
+			"backgroundPadding": "both",
+			"backgroundAlignVertical": "normal",
+			"backgroundAlignItemsVertical": "normal",
+			"backgroundAlignHorizontal": "normal",
+			"backgroundArrow": false,
+			"backgroundArrowColor": "black",
+			"backgroundArrowSize": "",
+			"spacingMobileTop": "0",
+			"spacingMobileBottom": "0",
+			"spacingDesktopTop": "192",
+			"spacingDesktopBottom": "0",
+			"content": {
+				"columns": [
+					{
+						"id": "26037a6e-c514-4565-bc43-72c5c7196f6e",
+						"width": "1/1",
+						"span": 12,
+						"blocks": [
+							{
+								"id": "3af9932a-7be8-4de8-bea2-f1e93b9a1c7e",
+								"type": "text",
+								"content": {
+									"text": "<p>deutsch  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>",
+									"textfont": "",
+									"textsize": "",
+									"textcolor": "black",
+									"textalign": "left"
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,11 +1,9 @@
 ---
-import { getData, getGlobal } from '../lib/api.js';
-
-const data = await getData(`/home.json`);
-const global = await getGlobal();
-const origin = Astro.url.origin;
+import fs from 'fs';
+import path from 'path';
+const data = JSON.parse(fs.readFileSync(path.resolve('./src/json/home.json'), 'utf-8'));
+const global = JSON.parse(fs.readFileSync(path.resolve('./src/json/global.json'), 'utf-8'));
 const currentLang = data.lang;
-
 ---
 <html lang="en">
 	<head>
