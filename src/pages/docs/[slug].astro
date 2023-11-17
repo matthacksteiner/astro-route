@@ -1,9 +1,10 @@
 ---
+
 const API_URL = 'https://cms.baukasten.matthiashacksteiner.net';
+const { slug } = Astro.params;
 const pagesResponse = await fetch(API_URL + '/' + slug + '.json');
 if (!pagesResponse) throw Astro.redirect('/404');
-const { slug } = Astro.params;
-const pageTitle = global.siteTitle;
+const origin = Astro.url.origin
 ---
 
 <html lang="en">
@@ -13,6 +14,16 @@ const pageTitle = global.siteTitle;
 		<title>Document</title>
 	</head>
 	<body>
-		{pageTitle}
+		<div class="flex ">
+			<a href={origin}>home</a>
+			{slug}
+		</div>
 	</body>
 </html>
+
+<style lang="css">
+	.flex {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}

@@ -4,6 +4,7 @@ import { getData } from '../../lib/api.js';
 
 const currentLang = lang;
 const global = await getData(`/${currentLang}/global.json`);
+const origin = Astro.url.origin
 const pageTitle = global.siteTitle;
 ---
 
@@ -14,6 +15,38 @@ const pageTitle = global.siteTitle;
 		<title>Document</title>
 	</head>
 	<body>
-		{pageTitle}
+
+		<div class="flex">
+			<a href={origin}>home</a>
+			Current language: {currentLang}
+			<h3>Multilanguages - works</h3>
+			<nav>
+				{
+					global.navHeader &&
+						global.navHeader.map((item) => {
+								return (
+									<a
+										href={`/${currentLang}/${item.uri}`}
+										target={'_self'}
+										rel='noopener'
+										}
+									>
+										{item.title}
+									</a>
+								);
+						})
+				}
+			</nav>
+		</div>
+
 	</body>
 </html>
+
+<style lang="css">
+	nav, .flex {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+</style>
