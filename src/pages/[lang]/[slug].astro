@@ -1,15 +1,8 @@
 ---
-// const API_URL = 'https://cms.baukasten.matthiashacksteiner.net';
-// const { lang, slug } = Astro.params;
-// const pagesResponse = await fetch(API_URL + '/' + lang + '/' + slug + '.json');
-// if (!pagesResponse) throw Astro.redirect('/404');
-// const origin = Astro.url.origin
-
 import { join } from 'path';
 import { promises as fs } from 'fs';
 const { readFile } = fs;
 const { lang, slug } = Astro.params;
-console.log("🚀 ~ file: [slug].astro:12 ~ lang:", lang)
 const JSON_PATH = join(process.cwd(), 'src', 'json', `${lang}`, slug + '.json');
 const jsonData = await readFile(JSON_PATH, 'utf-8');
 const pagesResponse = JSON.parse(jsonData);
