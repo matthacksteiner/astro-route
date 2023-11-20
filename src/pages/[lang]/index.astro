@@ -2,7 +2,6 @@
 import Navigation from "../../components/navigation.astro";
 const { lang } = Astro.params;
 const currentLang = lang;
-const origin = Astro.url.origin
 ---
 
 <html lang="en">
@@ -14,7 +13,7 @@ const origin = Astro.url.origin
 	<body>
 
 		<div class="flex">
-			<a href={origin}>home</a>
+			<a href="/">home</a>
 			<h1 class="text-4xl">index {currentLang}</h1>
 			<Navigation currentLang={currentLang} />
 		</div>
