@@ -1,0 +1,53 @@
+---
+const nav = {
+        de: [
+                {
+                        title: "impressum",
+                        uri: "impressum",
+                },
+                {
+                        title: "datenschutz",
+                        uri: "datenschutz",
+                },
+        ],
+        en: [
+                {
+                        title: "imprint",
+                        uri: "imprint",
+                },
+                {
+                        title: "dataprotection",
+                        uri: "dataprotection",
+                },
+        ],
+};
+const currentLang = Astro.props.currentLang;
+---
+<nav class="flex">
+    {
+        currentLang === '' ? (
+        nav.de.map(({ title, uri }) => (
+            <a href={`/de/${uri}`}>{title}</a>
+        ))
+        ) : (
+            nav[currentLang].map(({ title, uri }) => (
+                <a href={`/${currentLang}/${uri}`}>{title}</a>
+            ))
+        )
+    }
+</nav>
+<h3>Single Language - not working!</h3>
+<nav class="flex">
+{
+     nav.de.map(({ title, uri }) => (
+            <a href={`/${uri}`}>{title}</a>
+        ))
+}
+</nav>
+
+<style lang="css">
+    .flex {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

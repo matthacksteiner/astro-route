@@ -1,17 +1,5 @@
 ---
-import Nav from "../../components/nav.astro";
-const nav = [
-{
-
-			"title": "impressum",
-			"uri": "impressum",
-		},
-		{
-
-			"title": "datenschutz",
-			"uri": "datenschutz",
-		}
-]
+import Navigation from "../../components/navigation.astro";
 const { lang } = Astro.params;
 const currentLang = lang;
 const origin = Astro.url.origin
@@ -27,9 +15,9 @@ const origin = Astro.url.origin
 
 		<div class="flex">
 			<a href={origin}>home</a>
-			Current language: {currentLang}
+			<h1 class="text-4xl">index {currentLang}</h1>
 			<h3>Multilanguages - works</h3>
-			<Nav currentLang={currentLang} />
+			<Navigation currentLang={currentLang} />
 		</div>
 
 	</body>
